@@ -574,8 +574,30 @@ class Admin_Settings {
 			'status' => 200,
 		] );
 	}
+    /**
+     * Start Export wp-cli
+     *
+     * @return false|string
+     */
+    public function start_export_cli() {
+        $blog_id = 0;
+        $type    = 'export';
 
-	/**
+        do_action( 'ss_before_perform_archive_action', $blog_id, 'start', Plugin::instance()->get_archive_creation_job() );
+
+        $type = apply_filters( 'ss_export_type', $type );
+
+        Plugin::instance()->run_static_export( $blog_id, $type );
+
+        do_action( 'ss_after_perform_archive_action', $blog_id, 'start', Plugin::instance()->get_archive_creation_job() );
+
+        return json_encode( [
+            'status' => 200,
+        ] );
+    }
+
+
+    /**
 	 * Start Export
 	 *
 	 * @return false|string
@@ -604,4 +626,8 @@ class Admin_Settings {
 			'running' => Plugin::instance()->get_archive_creation_job()->is_running()
 		] );
 	}
+
+    public function is_running_cli() {
+        return Plugin::instance()->get_archive_creation_job()->is_running();
+    }
 }

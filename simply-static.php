@@ -100,3 +100,8 @@ if ( ! function_exists( 'simply_static_run_plugin' ) ) {
 		}
 	}
 }
+
+if (defined('WP_CLI') && WP_CLI) {
+    include_once dirname(__FILE__) . '/class-simply-cli.php';
+    WP_CLI::add_command('simply', 'StaticPress_CLI_Command');
+}

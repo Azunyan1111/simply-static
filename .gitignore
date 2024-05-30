@@ -5,4 +5,8 @@
 /composer.lock
 node_modules
 package-lock.json
+*.zip
+tmp/
+wp-cli.phar
+.idea/
 ```
